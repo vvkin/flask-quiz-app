@@ -10,10 +10,15 @@ def create_app():
     )
     app.config.from_pyfile('config.py', silent=True)
 
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+
     # Initialize database
     from . import db
-    db.init_app()
-    
+    db.init_app(app)
+
     from .auth.auth import auth_bp
     app.register_blueprint(auth_bp)
     

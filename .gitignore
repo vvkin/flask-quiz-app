@@ -6,3 +6,6 @@ __pycache__/*
 
 # File with secret configuration
 config.py
+
+# Database
+instance/*
