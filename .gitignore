@@ -1,3 +1,8 @@
+# Pipenv settings
 Pipfile*
+
 __pycache__/*
 .vscode/*
+
+# File with secret configuration
+config.py
