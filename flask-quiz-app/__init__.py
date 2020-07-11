@@ -21,5 +21,7 @@ def create_app():
 
     from .auth.auth import auth_bp
     app.register_blueprint(auth_bp)
+    from .general.general import general_bp
+    app.register_blueprint(general_bp)
     
     return app

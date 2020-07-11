@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, render_template, flash, redirect, url_for
+from flask import Blueprint, request, session, render_template, flash, redirect, url_for, g
 from werkzeug.security import check_password_hash, generate_password_hash
 from ..db import get_db
 
@@ -39,14 +39,13 @@ def register():
         db.execute('INSERT INTO Rating VALUES (?, ?, ?, ?, ?)', 
         ('DEFAULT','DEFAULT', 'DEFAULT', 'DEFAULT', 'DEFAULT'))
         rating_id = db.execute('SELECT id FROM Rating ORDER BY id DESC').fetchone()
-        db.execute('''
-            INSERT INTO user (first_name, second_name, email, username, password, rating)
-            VALUES (?, ?, ?, ?, ?)
-            ''', (first_name, second_name, email, username, 
-                  generage_pasword_hash(password), rating_id)
-            )
+        db.execute('INSERT INTO user VALUES (?, ?, ?, ?, ?)', 
+            (first_name, second_name, email, username, 
+            generage_pasword_hash(password), rating_id))
         db.commit()
+
         return redirect(url_for('general.index'))
+
     return render_template('register.html')
 
 @auth_bp.route('/login', methods=('GET', 'POST'))
@@ -81,7 +80,7 @@ def logout():
 
 @auth_bp.before_app_request
 def load_logged_in_user():
-    user_id = session['user_id']
+    user_id = session.get('user_id')
     if user_id is None:
         g.user = None
     else:
