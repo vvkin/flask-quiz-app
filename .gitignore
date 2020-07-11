@@ -1,7 +1,7 @@
 # Pipenv settings
 Pipfile*
 
-__pycache__/*
+*__pycache__*
 .vscode/*
 
 # File with secret configuration

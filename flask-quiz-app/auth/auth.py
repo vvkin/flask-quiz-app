@@ -2,9 +2,7 @@ from flask import Blueprint, request, session, render_template, flash, redirect,
 from werkzeug.security import check_password_hash, generate_password_hash
 from ..db import get_db
 
-auth_bp = Blueprint('auth_bp', __name__, url_prefix='/auth', 
-                    template_folder='templates/auth'
-                    )
+auth_bp = Blueprint('auth', __name__, template_folder='templates/auth')
 
 @auth_bp.route('/register', methods=('GET', 'POST'))
 def register():
@@ -69,14 +67,14 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return redirect(url_for('general.index'))
+            return redirect(url_for('general.home'))
         flash(error)
     return render_template('login.html')
 
 @auth_bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('general.index'))
+    return redirect(url_for('general.home'))
 
 @auth_bp.before_app_request
 def load_logged_in_user():

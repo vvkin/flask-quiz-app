@@ -20,8 +20,9 @@ def create_app():
     db.init_app(app)
 
     from .auth.auth import auth_bp
-    app.register_blueprint(auth_bp)
     from .general.general import general_bp
-    app.register_blueprint(general_bp)
+
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(general_bp, url_prefix='/general')
     
     return app
