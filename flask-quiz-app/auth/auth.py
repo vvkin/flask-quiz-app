@@ -1,4 +1,5 @@
-from flask import Blueprint, request, session, render_template, flash, redirect
+from flask import Blueprint, request, session, render_template, flash, redirect, url_for
+from werkzeug.security import check_password_hash, generate_password_hash
 from ..db import get_db
 
 auth_bp = Blueprint('auth_bp', __name__, url_prefix='/auth', 
@@ -41,12 +42,48 @@ def register():
         db.execute('''
             INSERT INTO user (first_name, second_name, email, username, password, rating)
             VALUES (?, ?, ?, ?, ?)
-            ''', (first_name, second_name, email, username, password, rating_id)
+            ''', (first_name, second_name, email, username, 
+                  generage_pasword_hash(password), rating_id)
             )
         db.commit()
-        return redirect(url_for('general.index')
+        return redirect(url_for('general.index'))
     return render_template('register.html')
 
 @auth_bp.route('/login', methods=('GET', 'POST'))
 def login():
-    pass
+    if request.method == 'POST':
+        error = None
+        db = get_db()
+        username = request.form['username']
+        password = request.form['passwd']
+        user = db.execute('SELECT * FROM User WHERE username=?', (username, ))
+
+        if username is None:
+            error = 'Username is required'
+        elif password is None:
+            error = 'Password is required'
+        elif user is None:
+            error = 'Incorrect username'
+        elif not check_password_hash(user['password'], password):
+            error = 'Incorrect password'
+        
+        if error is None:
+            session.clear()
+            session['user_id'] = user['id']
+            return redirect(url_for('general.index'))
+        flash(error)
+    return render_template('login.html')
+
+@auth_bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('general.index'))
+
+@auth_bp.before_app_request
+def load_logged_in_user():
+    user_id = session['user_id']
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_db().execute('SELECT * FROM User WHERE id=?', (user_id, )
+        ).fetchone()
