@@ -9,6 +9,7 @@
     background-color: #101010;
     width: 100%;
     height: 59px;
+    font-family: "Open Sans", sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -59,3 +60,35 @@
     border-color: grey;
     border-radius: 5px;
 }
+
+.footer{
+    margin-top: auto;
+    max-height: 120px;
+    padding: 20px;
+    font-family: "Open Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    background-color: #ccc;
+}
+
+.footer li{
+    float: left;
+}
+
+.footer li a{
+    padding: 0 10px;
+    color: black;
+}
+
+.footer li a:hover{
+    color: grey;
+    text-decoration: underline;
+}
+
+.footer img{
+    height: 90px;
+}
+
+
