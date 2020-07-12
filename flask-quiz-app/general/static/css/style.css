@@ -97,7 +97,7 @@
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
     padding: 50px;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .info_container_inner{
