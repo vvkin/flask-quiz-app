@@ -52,6 +52,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
+            flash('You have been successfully logged in', category='success')
             return redirect(url_for('general.home'))
         flash(error)
     return render_template('login.html')

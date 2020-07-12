@@ -10,11 +10,17 @@
     <body>
         {% include 'header.html' %}
         {% if get_flashed_messages() %}
-            <div class="flash">
-                {% for message in get_flashed_messages() %}
-                    <span>{{ message }}</span>
-                {% endfor %}
-            </div>
+            {% for category, message in get_flashed_messages(with_categories=True) %}
+                {% if category =='success' %}
+                    <div class="flash_success">
+                        <span>{{ message }}</span>
+                    </div>
+                {% else %}
+                    <div class="flash_error">
+                        <span>{{ message }}</span> 
+                    </div>
+                {% endif %}
+            {% endfor %}
         {% endif %}
         {% block content %} {% endblock %}
         {% include 'footer.html' %}

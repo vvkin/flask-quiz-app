@@ -166,7 +166,7 @@
     font-family: "Open Sans", sans-serif;
 }
 
-.flash{
+.flash_error{
   color: #cc0033;
   font-family: Helvetica, Arial, sans-serif;
   text-align: center;
@@ -176,6 +176,18 @@
   font-size: 16px;
   font-weight: 600;
   text-shadow: 1px 1px rgba(250,250,250,.3);
+}
+
+.flash_success{
+    color: rgb(25, 129, 33);
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+    background-color:  rgb(110, 233, 120);
+    border: 1px solid rgb(60, 230, 81);
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-shadow: 1px 1px rgba(250,250,250,.3);
 }
 
 
