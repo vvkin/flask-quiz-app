@@ -2,31 +2,22 @@ from flask import Blueprint, request, session, render_template, flash, redirect,
 from werkzeug.security import check_password_hash, generate_password_hash
 from ..db import get_db
 
-auth_bp = Blueprint('auth', __name__, template_folder='templates/auth')
+auth_bp = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
 
 @auth_bp.route('/register', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
         error = None
         db = get_db()
-        first_name = request.form['uf_name']
-        second_name = request.form['us_name']
-        username = request.form['username']
+        full_name = request.form['u_name']
         email = request.form['u_email']
-        password = request.form['u_pswd']
+        username = request.form['username']
+        password = request.form['u_passwd']
 
-        if first_name is None:
-            error = 'First name is required!'
-        elif second_name is None:
-            error = 'Second name if required!'
-        elif email is None:
-            error = 'Email is required!'
-        elif password is None:
-            error = 'Password is required!'
-        elif db.execute('SELECT id FROM user WHERE username=?', 
+        if db.execute('SELECT id FROM user WHERE username=?', 
         (username, )).fetchone() is not None:
             error = 'Username is already exist!'
-        elif db.execute('SELCT id FROM user WHERE email=?',
+        elif db.execute('SELECT id FROM user WHERE email=?',
         (email, )).fetchone() is not None:
             error = 'Email is used by another user!'
         
@@ -34,16 +25,18 @@ def register():
             flash(error)
             return render_template('login.html')
 
-        db.execute('INSERT INTO Rating VALUES (?, ?, ?, ?, ?)', 
-        ('DEFAULT','DEFAULT', 'DEFAULT', 'DEFAULT', 'DEFAULT'))
-        rating_id = db.execute('SELECT id FROM Rating ORDER BY id DESC').fetchone()
-        db.execute('INSERT INTO user VALUES (?, ?, ?, ?, ?)', 
-            (first_name, second_name, email, username, 
-            generage_pasword_hash(password), rating_id))
+        db.execute('''INSERT INTO Rating 
+        (battles_number, correct_answers, wrong_answers, correct_percent, rating_value)
+        VALUES(?,?,?,?,?)''', (0, 0, 0, 0 ,0))
+        rating_id = db.execute('SELECT id FROM Rating ORDER BY id DESC').fetchone()[0]
+        print(rating_id)
+        db.execute('''INSERT INTO User (full_name, username, email, password, rating) 
+        VALUES (?, ?, ?, ?, ?)''', 
+            (full_name, email, username, 
+            generate_password_hash(password), rating_id))
         db.commit()
 
-        return redirect(url_for('general.index'))
-
+        return redirect(url_for('general.home'))
     return render_template('register.html')
 
 @auth_bp.route('/login', methods=('GET', 'POST'))

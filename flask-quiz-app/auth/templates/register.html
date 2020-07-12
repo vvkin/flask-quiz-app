@@ -1,0 +1,39 @@
+{% extends 'base.html'  %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('auth.static', filename='css/style.css') }}" />
+<script src="{{ url_for('auth.static', filename='js/script.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="register_form_wrapper">
+    <section class="register_form">
+        <form action="" method="POST" class="r_form">
+            <h3>Quiz Register Form</h3>
+            <fieldset>
+                <input name="u_name" placeholder="Your full name" type="text" 
+                maxlength="30" required/>
+            </fieldset>
+            <fieldset>
+                <input name="u_email" placeholder="Your email" type="email" required />
+            </fieldset>
+            <fieldset>
+                <input name="username" placeholder="Your username" type="text" 
+                required maxlength="30"/>
+            </fieldset>
+            <fieldset>
+                <input name="u_passwd" placeholder="Your password" type="password" 
+                required />
+            </fieldset>
+            <fieldset>
+                <input name="us_passwd" placeholder="Confirm password" type="password" 
+                required onended="checkPasswords()"/>
+            </fieldset>
+            <fieldset>
+                <button name="submit" type="submit" value="Submit" 
+                id="submit_button" submit="...Sending" >Submit</button>
+            </fieldset>
+        </form>
+    </section>
+</div>
+{% endblock %}
