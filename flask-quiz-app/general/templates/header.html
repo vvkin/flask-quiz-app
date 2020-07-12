@@ -1,19 +1,21 @@
 <header class="header">
-    <div class="logo-div">
-        <img src="{{ url_for('general.static', filename='img/logo_white.png') }}" class="logo-img"/>
+    <div class="logo_div">
+        <a href="{{ url_for('general.home') }}">
+            <img src="{{ url_for('general.static', filename='img/logo_white.png') }}" class="logo_img"/>
+        </a>
     </div>
    <div class="search_bar">
         <input type="text" name="search_users" placeholder="Search users"/>
     </div>
-    <nav class="right-nav">
+    <nav class="right_nav">
         <ul>
             {% if g.user %}
                 <li><a href="#"><i class="fa fa-bell-o"></i></a></li>
                 <li><a href="#"><i class="fa fa-user-circle"></i></a></li>
                 <li><a href="#"><i class="fa fa-bars"></i></a></li>
             {% else %}
-                <li><a href="#">Sign in</a></li>
-                <li><a href="#">Sign up</a></li>
+                <li><a href="{{ url_for('auth.login') }}">Sign in</a></li>
+                <li><a href="{{ url_for('auth.register') }}">Sign up</a></li>
                 <li><a href="#">About</a></li>
             {% endif %}
         </ul>

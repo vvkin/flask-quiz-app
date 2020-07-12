@@ -39,12 +39,16 @@ def register():
 
 @auth_bp.route('/login', methods=('GET', 'POST'))
 def login():
+    if g.user:
+            flash('You already logged in')
+            return redirect(url_for('general.home'))
     if request.method == 'POST':
         error = None
         db = get_db()
         username = request.form['username']
         password = request.form['password']
         user = db.execute('SELECT * FROM User WHERE username=?', (username, )).fetchone()
+
         if user is None:
             error = 'Incorrect username'
         elif not check_password_hash(user['password'], password):

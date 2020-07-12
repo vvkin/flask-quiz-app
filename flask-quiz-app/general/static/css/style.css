@@ -15,37 +15,37 @@
     align-items: center;
 }
 
-.right-nav{
-    padding: 0 20px;
+.right_nav{
+    padding: 0px 20px;
 }
 
-.right-nav li{
+.right_nav li{
     float: left;
     font-size: 16px;
 }
 
-.right-nav ul{
-    display: flex;
+.right_nav ul{
+    height: inherit;
 }
 
-.right-nav li a{
-    padding: 0px 10px;
+.right_nav li a{
+    padding: 0 10px;
     color: white;
 }
 
-.right-nav li a:hover{
+.right_nav li a:hover{
     color: grey;
 }
 
-.right-nav li a i{
+.right_nav li a i{
     font-size: 20px;
 }
 
-.logo-div{
+.logo_div{
    height: 100px;
 }
 
-.logo-img{
+.logo_img{
     max-height: 100%;
     padding: 0 20px;
 }
