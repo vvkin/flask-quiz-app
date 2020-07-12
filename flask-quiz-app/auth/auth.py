@@ -45,18 +45,14 @@ def login():
         error = None
         db = get_db()
         username = request.form['username']
-        password = request.form['passwd']
-        user = db.execute('SELECT * FROM User WHERE username=?', (username, ))
+        password = request.form['password']
+        user = db.execute('SELECT * FROM User WHERE username=?', (username, )).fetchone()
 
-        if username is None:
-            error = 'Username is required'
-        elif password is None:
-            error = 'Password is required'
-        elif user is None:
+        if user is None:
             error = 'Incorrect username'
         elif not check_password_hash(user['password'], password):
             error = 'Incorrect password'
-        
+        print(error)
         if error is None:
             session.clear()
             session['user_id'] = user['id']

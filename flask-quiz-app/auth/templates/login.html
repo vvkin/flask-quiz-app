@@ -1,7 +1,27 @@
 {% extends 'base.html' %}
 
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('auth.static', filename='css/style.css') }}" />
+{% endblock %}
+
 {% block content %}
     <div class="register_form_wrapper">
-        <section class="register_form"></section>
+        <section class="register_form">
+            <form action="" method="POST" class="r_form">
+                <h3>Quiz Login Form</h3>
+                <fieldset>
+                    <input name="username" placeholder="Your username" type="text" 
+                    maxlength=required/>
+                </fieldset>
+                <fieldset>
+                    <input name="password" placeholder="Your password" type="password" 
+                    maxlength=required/>
+                </fieldset>
+                <fieldset>
+                    <button name="submit" type="submit" value="Submit" 
+                    id="submit_button" submit="...Sending" >Submit</button>
+                </fieldset>
+            </form>
+        </section>
     </div>
 {% endblock %}
