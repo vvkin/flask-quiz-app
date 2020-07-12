@@ -23,6 +23,6 @@ def create_app():
     from .general.general import general_bp
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(general_bp, url_prefix='/general')
+    app.register_blueprint(general_bp, url_prefix='/')
     
     return app

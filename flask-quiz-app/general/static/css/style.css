@@ -63,7 +63,8 @@
 
 .footer{
     margin-top: auto;
-    max-height: 120px;
+    border-top: 1px solid #bbb;
+    height: 180px;
     padding: 20px;
     font-family: "Open Sans", sans-serif;
     display: flex;
@@ -91,4 +92,33 @@
     height: 90px;
 }
 
+.home_content{
+    background-color: red;
+    height: 100vh;
+}
+
+.info_container_inner{
+    height: 100px;
+    text-align: center;
+    background-color: yellow;
+}
+
+.img_container img{
+    width: inherit;
+}
+
+.survey_button{
+    background: #D2D2D2;
+    border-radius: 20px;
+    padding: 7px 35px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.45em;
+    margin: 0 15px;
+    font-family: 'Montserrat', Helvetica, sans-serif;
+}
+
+.survey_button:hover{
+    background-color: grey;
+}
 
