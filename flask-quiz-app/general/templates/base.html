@@ -9,11 +9,13 @@
     </head>
     <body>
         {% include 'header.html' %}
-        <div class="flash">
-            {% for message in get_flashed_messages() %}
-                <span>{{ message }}</span>
-            {% endfor %}
-        </div>
+        {% if get_flashed_messages() %}
+            <div class="flash">
+                {% for message in get_flashed_messages() %}
+                    <span>{{ message }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% block content %} {% endblock %}
         {% include 'footer.html' %}
     </body>

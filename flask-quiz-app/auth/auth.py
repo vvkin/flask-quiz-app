@@ -20,23 +20,21 @@ def register():
         elif db.execute('SELECT id FROM user WHERE email=?',
         (email, )).fetchone() is not None:
             error = 'Email is used by another user!'
-        
-        if error is not None:
-            flash(error)
-            return render_template('login.html')
+        else:
+            db.execute('''INSERT INTO Rating 
+            (battles_number, correct_answers, wrong_answers, correct_percent, rating_value)
+            VALUES(?,?,?,?,?)''', (0, 0, 0, 0 ,0))
+            rating_id = db.execute('SELECT id FROM Rating ORDER BY id DESC').fetchone()[0]
+            db.execute('''INSERT INTO User (full_name, username, email, password, rating) 
+            VALUES (?, ?, ?, ?, ?)''', 
+                (full_name, username, email, 
+                generate_password_hash(password), rating_id))
+            db.commit()
+            flash('You have been succesfully signed up', category='success')
+            return redirect(url_for('general.home'))
 
-        db.execute('''INSERT INTO Rating 
-        (battles_number, correct_answers, wrong_answers, correct_percent, rating_value)
-        VALUES(?,?,?,?,?)''', (0, 0, 0, 0 ,0))
-        rating_id = db.execute('SELECT id FROM Rating ORDER BY id DESC').fetchone()[0]
-        print(rating_id)
-        db.execute('''INSERT INTO User (full_name, username, email, password, rating) 
-        VALUES (?, ?, ?, ?, ?)''', 
-            (full_name, email, username, 
-            generate_password_hash(password), rating_id))
-        db.commit()
+        flash(error)
 
-        return redirect(url_for('general.home'))
     return render_template('register.html')
 
 @auth_bp.route('/login', methods=('GET', 'POST'))
@@ -47,12 +45,10 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = db.execute('SELECT * FROM User WHERE username=?', (username, )).fetchone()
-
         if user is None:
             error = 'Incorrect username'
         elif not check_password_hash(user['password'], password):
             error = 'Incorrect password'
-        print(error)
         if error is None:
             session.clear()
             session['user_id'] = user['id']
