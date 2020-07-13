@@ -1,5 +1,4 @@
 from flask import Blueprint, g, render_template, request, redirect, flash, url_for, session
-import json
 import requests
 
 play_bp = Blueprint('play', __name__, static_folder='static', template_folder='templates')
@@ -9,31 +8,36 @@ def play():
     if request.method == 'POST':
         q_number = int(request.form['diff_button'])
         get_questions_set(q_number)
-        #return redirect(url_for('play.display_question', q_number=0))
+        return redirect(url_for('play.display_question', q_number=0))
     return render_template('play.html')
 
 
-@play_bp.route('qustion<int:q_number>', methods=('GET', 'POST'))
+@play_bp.route('/question/<int:q_number>/', methods=('GET', 'POST'))
 def display_question(q_number):
-    current_question = session['q_set'][q_number]
-    # TODO: write answer validation, score
-    if q_number == len(session['q_set']) - 1:
+    if request.method == 'POST':
+        answer = request.form['answer']
+        # TODO: answer logic
+        return redirect(url_for('display_question', q_number=q_number+1))
+
+    if q_number == len(session['q_set']):
         session.pop('q_set')
-        return redirect(url_for('play.results', q_number=q_number+1))
-    return redirect(url_for('play.display_question', q_number=q_number+1))
+        return redirect(url_for('play.results', q_number=q_number))
+    
+    current_question = session['q_set'][q_number]
+    return render_template('question.html', question=current_question)
 
 
 def get_questions_set(q_number):
     url = f'https://opentdb.com/api.php?amount={q_number}'
     response = requests.get(url)
-    q_json = json.loads(response.text)
+    q_json = response.json()
     data = []
-
+   
     for q_info in q_json['results']:
         all_answers = [q_info['correct_answer']] + q_info['incorrect_answers']
-        data.append({'correct' : q_info['correct_answer'], 'all_answers' : all_answers})
+        data.append({'correct' : q_info['correct_answer'], 
+        'all_answers' : all_answers, 'text': q_info['question']})
 
-    flash(data, category='success')
     session['q_set'] = data
 
 @play_bp.route('/results')
