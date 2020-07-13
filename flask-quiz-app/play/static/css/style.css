@@ -1,0 +1,41 @@
+#diff_form{
+    padding: 140px 0;
+}
+
+.diff_button{
+    width: 100%;
+    border: 0;
+    outline: none;
+    border-radius: 15px;
+    padding: 35px 0;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+
+}
+
+.diff_button:hover{
+    box-shadow: none;
+}
+
+.diff_button:active{
+    box-shadow: inset 0 1px 2px #555;
+}
+
+#lite_diff{
+    background-color: #32CD32;
+}
+
+#medium_diff{
+    background-color: #FFD300;
+}
+
+#hard_diff{
+    background-color: #FF0500;
+}
+
+.diff{
+    text-align: center;
+}
+
+.qustion_num{
+    font-weight: bold;
+}

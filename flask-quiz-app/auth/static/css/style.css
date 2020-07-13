@@ -1,18 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    -o-font-smoothing: antialiased;
-    font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-}
-
 .register_form_wrapper{
   width: 100%;
   font-family: "Roboto", Helvetica, Arial, sans-serif;

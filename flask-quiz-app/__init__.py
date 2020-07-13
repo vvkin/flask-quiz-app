@@ -21,8 +21,10 @@ def create_app():
 
     from .auth.auth import auth_bp
     from .general.general import general_bp
+    from .play.play import play_bp
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(general_bp, url_prefix='/')
+    app.register_blueprint(play_bp, url_prefix='/play')
     
     return app
