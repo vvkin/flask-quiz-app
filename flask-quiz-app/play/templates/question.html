@@ -2,8 +2,25 @@
 
 {% block title %}Play{% endblock %}
 
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('play.static', filename='css/style.css') }}" />
+{% endblock %}
+
 {% block content %}
-    <p>{{ question.text }}</p>
-    <p>{{ question.correct }}</p>
-    <p>{{ question.all_answers }}</p>
+   <section class="question_content">
+       <form action="" id="question_form" method="POST">
+           <div class="question_text">
+                <h3>{{ question.text }}</h3>
+           </div>
+           <div class="q_answers">
+                {% for variant in question.all_answers %}
+                    <fieldset>
+                        <button name="answer" class="answer" type="submit">
+                            <span>{{ variant }}</span>
+                        </button>
+                    </fieldset>
+                {% endfor %}
+           </div>
+       </form>
+   </section>
 {% endblock %}

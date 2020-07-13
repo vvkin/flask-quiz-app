@@ -39,3 +39,7 @@
 .qustion_num{
     font-weight: bold;
 }
+
+.question_content{
+    text-align: center;
+}
