@@ -16,12 +16,13 @@ def play():
 def display_question(q_number):
     if request.method == 'POST':
         answer = request.form['answer']
-        # TODO: answer logic
-        return redirect(url_for('display_question', q_number=q_number+1))
+        flash(answer + ' ' + session['q_set'][q_number]['correct'])
+        if answer == session['q_set'][q_number]['correct']:
+           session['c_answ'] += 1
+        return redirect(url_for('play.display_question', q_number=q_number+1))
 
     if q_number == len(session['q_set']):
-        session.pop('q_set')
-        return redirect(url_for('play.results', q_number=q_number))
+        return redirect(url_for('play.display_results'))
     
     current_question = session['q_set'][q_number]
     return render_template('question.html', question=current_question)
@@ -39,9 +40,11 @@ def get_questions_set(q_number):
         'all_answers' : all_answers, 'text': q_info['question']})
 
     session['q_set'] = data
+    session['c_answ'] = 0
 
 @play_bp.route('/results')
-def display_results(q_number):
-    correct = session.pop('correct')
-    return render_template('result.html',correct=correct, q_number=q_number)
+def display_results():
+    q_number = len(session.pop('q_set'))
+    c_number = session.pop('c_answ')
+    return render_template('results.html',c_number=c_number, q_number=q_number)
 

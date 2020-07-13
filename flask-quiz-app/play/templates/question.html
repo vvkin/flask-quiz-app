@@ -15,7 +15,8 @@
            <div class="q_answers">
                 {% for variant in question.all_answers %}
                     <fieldset>
-                        <button name="answer" class="answer" type="submit">
+                        <button name="answer" class="answer" type="submit" 
+                        value="{{ variant }}">
                             <span>{{ variant }}</span>
                         </button>
                     </fieldset>
