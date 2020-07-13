@@ -43,3 +43,18 @@
 .question_content{
     text-align: center;
 }
+
+.answer{
+    width: 100%;
+    padding: 20px 50px;
+}
+
+.results_content{
+    min-height: 50vh;
+}
+
+.results_wrapper{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}

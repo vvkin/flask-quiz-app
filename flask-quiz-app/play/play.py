@@ -16,7 +16,7 @@ def play():
 def display_question(q_number):
     if request.method == 'POST':
         answer = request.form['answer']
-        flash(answer + ' ' + session['q_set'][q_number]['correct'])
+        #flash(answer + ' ' + session['q_set'][q_number]['correct'])
         if answer == session['q_set'][q_number]['correct']:
            session['c_answ'] += 1
         return redirect(url_for('play.display_question', q_number=q_number+1))

@@ -2,7 +2,29 @@
 
 {% block title %}Results{% endblock %}
 
+{% block links %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('play.static', filename='css/style.css') }}" />
+{% endblock %}
+
 {% block content %}
-    <p>Correct - {{c_number}}</p>
-    <p>Incorrect - {{q_number - c_number}}</p>
+    <section class="results_content">
+        <div class="results_wrapper">
+            <div class="answers_info">
+                <span class="corr_answers">Correct answers - {{c_number}}</span>
+                <span class="corr_percent">Accuracy - {{(c_number/q_number * 100)|round(2)}}%</span>
+            </div>
+            <div class="results_smile">
+                {% if c_number/q_number > 0.9 %}
+                    <img src="{{ url_for('play.static', filename='img/happy.png') }}" />
+                    <span>Nice!</span>
+                {% elif c_number/q_number > 0.5 %}
+                    <img src="{{ url_for('play.static', filename='img/normal.png') }}" />
+                    <span>You can better!</span>
+                {% else %}
+                    <img src="{{ url_for('play.static', filename='img/sad.png') }}" />
+                    <span>So, next time it will be better...</span>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 {% endblock %}
