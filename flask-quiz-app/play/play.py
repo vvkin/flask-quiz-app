@@ -1,10 +1,22 @@
-from flask import Blueprint, g, render_template, request, redirect, flash, url_for, session
+from flask import Blueprint, g, render_template, request, redirect, flash, url_for, \
+    session, abort
 from ..db import get_db
+from ..auth.auth import login_required
 import requests
+import functools
 
 play_bp = Blueprint('play', __name__, static_folder='static', template_folder='templates')
 
+def started_game_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if not 'q_number' in session and request.method != 'POST':
+            return redirect(url_for('play.play'))
+        return view(**kwargs)
+    return wrapped_view
+
 @play_bp.route('/', methods=('GET', 'POST'))
+@login_required
 def play():
     if request.method == 'POST':
         q_number = int(request.form['diff_button'])
@@ -15,7 +27,9 @@ def play():
     else:
         return render_template('play.html')
 
-@play_bp.route('/question', methods=('GET', 'POST'))
+@play_bp.route('/question/', methods=('GET', 'POST'))
+@started_game_required
+@login_required
 def display_question():
     if request.method == 'POST':
         answer = request.form['answer']
@@ -63,7 +77,9 @@ def update_rating(q_number, c_number):
         WHERE id=?''', tuple(rating.values())[1:5] + (g.user['rating'],))
     db.commit()
 
-@play_bp.route('/results', methods=('GET', 'POST'))
+@play_bp.route('/results/', methods=('GET', 'POST'))
+@started_game_required
+@login_required
 def display_results():
     if request.method == 'POST':
         answer = request.form['answer']

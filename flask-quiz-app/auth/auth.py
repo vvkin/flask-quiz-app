@@ -1,8 +1,19 @@
 from flask import Blueprint, request, session, render_template, flash, redirect, url_for, g
 from werkzeug.security import check_password_hash, generate_password_hash
 from ..db import get_db
+import functools
 
 auth_bp = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
+
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if not g.user:
+            return redirect(url_for('auth.login'))
+        return view(**kwargs)
+    return wrapped_view
+
 
 @auth_bp.route('/register', methods=('GET', 'POST'))
 def register():
