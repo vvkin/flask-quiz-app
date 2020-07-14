@@ -42,8 +42,15 @@ def get_questions_set(q_number):
     session['q_set'] = data
     session['c_answ'] = 0
 
-@play_bp.route('/results')
+@play_bp.route('/results', methods=('GET', 'POST'))
 def display_results():
+    if request.method == 'POST':
+        answer = request.form['answer']
+        if answer == 'tohome':
+            return redirect(url_for('general.home'))
+        else:
+            return redirect(url_for('play.play'))
+    
     q_number = len(session.pop('q_set'))
     c_number = session.pop('c_answ')
     return render_template('results.html',c_number=c_number, q_number=q_number)
