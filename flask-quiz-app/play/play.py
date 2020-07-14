@@ -1,4 +1,5 @@
 from flask import Blueprint, g, render_template, request, redirect, flash, url_for, session
+from ..db import get_db
 import requests
 
 play_bp = Blueprint('play', __name__, static_folder='static', template_folder='templates')
@@ -45,6 +46,23 @@ def get_questions_set(q_number):
     session['q_set'] = data
     session['c_answ'] = 0
 
+def update_rating(c_number, q_number):
+    db = get_db()
+    old_values = db.execute('SELECT * FROM Rating WHERE id = ?', 
+    (g.user['rating'], )).fetchone()
+    rating = dict(old_values)
+    rating['battles_number'] += 1
+    rating['correct_answers'] += c_number
+    rating['wrong_answers'] += q_number - c_number
+    rating['correct_percent'] = round(c_number/q_number, 2)
+    db.execute('''UPDATE Rating SET
+        battles_number = ?,
+        correct_answers = ?,
+        wrong_answers = ?,
+        correct_percent = ?
+        WHERE id=?''', tuple(rating.values())[1:5] + (g.user['rating'],))
+    db.commit()
+
 @play_bp.route('/results', methods=('GET', 'POST'))
 def display_results():
     if request.method == 'POST':
@@ -53,8 +71,9 @@ def display_results():
             return redirect(url_for('general.home'))
         else:
             return redirect(url_for('play.play'))
-    
+
     q_number = len(session.pop('q_set'))
     c_number = session.pop('c_answ')
+    update_rating(c_number, q_number)
     return render_template('results.html',c_number=c_number, q_number=q_number)
 
