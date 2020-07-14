@@ -11,7 +11,7 @@
        <div class="q_form_wrapper">
         <form action="" id="question_form" method="POST">
             <div class="question_text">
-                 <h3>{{ question.text|safe }}</h3>
+                 <h3>{{q_number+1}}. {{question.text|safe}}</h3>
             </div>
             <div class="q_answers">
                  {% for variant in question.all_answers %}
