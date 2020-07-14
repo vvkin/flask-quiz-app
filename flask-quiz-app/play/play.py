@@ -22,10 +22,7 @@ def play():
         q_number = int(request.form['diff_button'])
         get_questions_set(q_number)
         return redirect(url_for('play.display_question'))
-    elif not g.user:
-        return redirect(url_for('auth.register'))
-    else:
-        return render_template('play.html')
+    return render_template('play.html')
 
 @play_bp.route('/question/', methods=('GET', 'POST'))
 @started_game_required
@@ -65,12 +62,12 @@ def update_rating(q_number, c_number):
     old_values = db.execute('SELECT * FROM Rating WHERE id = ?', 
     (g.user['rating'], )).fetchone()
     rating = dict(old_values)
-    rating['battles_number'] += 1
+    rating['answers_number'] += q_number
     rating['correct_answers'] += c_number
     rating['wrong_answers'] += q_number - c_number
-    rating['correct_percent'] = round(c_number/q_number, 2)
+    rating['correct_percent'] = round(rating['correct_answers']/rating['answers_number'], 2)
     db.execute('''UPDATE Rating SET
-        battles_number = ?,
+        answers_number = ?,
         correct_answers = ?,
         wrong_answers = ?,
         correct_percent = ?

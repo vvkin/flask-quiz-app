@@ -15,7 +15,7 @@ def login_required(view):
     return wrapped_view
 
 
-@auth_bp.route('/register', methods=('GET', 'POST'))
+@auth_bp.route('/register/', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
         error = None
@@ -33,7 +33,7 @@ def register():
             error = 'Email is used by another user!'
         else:
             db.execute('''INSERT INTO Rating 
-            (battles_number, correct_answers, wrong_answers, correct_percent)
+            (answers_number, correct_answers, wrong_answers, correct_percent)
             VALUES(?,?,?,?)''', (0, 0, 0, 0))
             rating_id = db.execute('SELECT id FROM Rating ORDER BY id DESC').fetchone()[0]
             db.execute('''INSERT INTO User (full_name, username, email, password, rating) 
@@ -48,7 +48,7 @@ def register():
 
     return render_template('register.html')
 
-@auth_bp.route('/login', methods=('GET', 'POST'))
+@auth_bp.route('/login/', methods=('GET', 'POST'))
 def login():
     if g.user:
             flash('You already logged in')
@@ -72,7 +72,7 @@ def login():
         flash(error)
     return render_template('login.html')
 
-@auth_bp.route('/logout')
+@auth_bp.route('/logout/')
 def logout():
     session.clear()
     return redirect(url_for('general.home'))
