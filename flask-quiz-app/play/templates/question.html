@@ -11,14 +11,14 @@
        <div class="q_form_wrapper">
         <form action="" id="question_form" method="POST">
             <div class="question_text">
-                 <h3>{{ question.text }}</h3>
+                 <h3>{{ question.text|safe }}</h3>
             </div>
             <div class="q_answers">
                  {% for variant in question.all_answers %}
                      <fieldset>
                          <button name="answer" class="answer" type="submit" 
                          value="{{ variant }}">
-                             <span>{{ variant }}</span>
+                             <span>{{ variant|safe }}</span>
                          </button>
                      </fieldset>
                  {% endfor %}

@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .right_nav{
@@ -173,6 +174,7 @@
 
 .flash_error{
   color: #cc0033;
+  width: 100%;
   font-family: Helvetica, Arial, sans-serif;
   text-align: center;
   background-color: #fce4e4;
@@ -185,6 +187,7 @@
 
 .flash_success{
     color: rgb(25, 129, 33);
+    width: 100%;
     font-family: Helvetica, Arial, sans-serif;
     text-align: center;
     background-color:  rgb(110, 233, 120);
