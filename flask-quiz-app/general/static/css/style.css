@@ -15,8 +15,10 @@
 }
 
 .content_wrapper{
-    min-height: 100%;
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .right_nav{
