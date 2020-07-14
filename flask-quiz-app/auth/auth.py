@@ -22,8 +22,8 @@ def register():
             error = 'Email is used by another user!'
         else:
             db.execute('''INSERT INTO Rating 
-            (battles_number, correct_answers, wrong_answers, correct_percent, rating_value)
-            VALUES(?,?,?,?,?)''', (0, 0, 0, 0 ,0))
+            (battles_number, correct_answers, wrong_answers, correct_percent)
+            VALUES(?,?,?,?)''', (0, 0, 0, 0))
             rating_id = db.execute('SELECT id FROM Rating ORDER BY id DESC').fetchone()[0]
             db.execute('''INSERT INTO User (full_name, username, email, password, rating) 
             VALUES (?, ?, ?, ?, ?)''', 
