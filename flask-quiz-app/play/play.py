@@ -9,7 +9,10 @@ def play():
         q_number = int(request.form['diff_button'])
         get_questions_set(q_number)
         return redirect(url_for('play.display_question', q_number=0))
-    return render_template('play.html')
+    elif not g.user:
+        return redirect(url_for('auth.register'))
+    else:
+        return render_template('play.html')
 
 
 @play_bp.route('/question/<int:q_number>/', methods=('GET', 'POST'))

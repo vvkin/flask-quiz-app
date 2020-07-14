@@ -24,6 +24,9 @@
                     id="submit_button" submit="...Sending" >Submit</button>
                 </fieldset>
             </form>
+            <div class="redirect">
+                <a href="{{ url_for('auth.register') }}">I don't have account</a>
+            </div>
         </section>
     </div>
 {% endblock %}
