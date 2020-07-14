@@ -8,20 +8,22 @@
 
 {% block content %}
    <section class="question_content">
-       <form action="" id="question_form" method="POST">
-           <div class="question_text">
-                <h3>{{ question.text }}</h3>
-           </div>
-           <div class="q_answers">
-                {% for variant in question.all_answers %}
-                    <fieldset>
-                        <button name="answer" class="answer" type="submit" 
-                        value="{{ variant }}">
-                            <span>{{ variant }}</span>
-                        </button>
-                    </fieldset>
-                {% endfor %}
-           </div>
-       </form>
+       <div class="q_form_wrapper">
+        <form action="" id="question_form" method="POST">
+            <div class="question_text">
+                 <h3>{{ question.text }}</h3>
+            </div>
+            <div class="q_answers">
+                 {% for variant in question.all_answers %}
+                     <fieldset>
+                         <button name="answer" class="answer" type="submit" 
+                         value="{{ variant }}">
+                             <span>{{ variant }}</span>
+                         </button>
+                     </fieldset>
+                 {% endfor %}
+            </div>
+        </form>
+       </div>
    </section>
 {% endblock %}

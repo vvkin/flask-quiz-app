@@ -11,6 +11,7 @@
         <div class="results_wrapper">
             <div class="answers_info">
                 <span class="corr_answers">Correct answers - {{c_number}}</span>
+                <br>
                 <span class="corr_percent">Accuracy - {{(c_number/q_number * 100)|round(2)}}%</span>
             </div>
             <div class="results_smile">
@@ -22,6 +23,7 @@
                     <span>You can better!</span>
                 {% else %}
                     <img src="{{ url_for('play.static', filename='img/sad.png') }}" />
+                    <br>
                     <span>So, next time it will be better...</span>
                 {% endif %}
             </div>

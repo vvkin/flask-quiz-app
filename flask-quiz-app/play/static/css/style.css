@@ -42,19 +42,56 @@
 
 .question_content{
     text-align: center;
+    padding: 30px 40px;
+}
+
+.question_text{
+    margin-bottom: 15px;
 }
 
 .answer{
-    width: 100%;
+    width: 50%;
     padding: 20px 50px;
+    margin:  5px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #111;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 16;
 }
 
-.results_content{
-    min-height: 50vh;
+.answer:hover{
+    background-color: #222;
+}
+
+.q_form_wrapper{
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 .results_wrapper{
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-content: center;
+    text-align: center;
+    padding: 30px 10px;
+    font-family: "Open Sans", sans-serif;
+}
+
+.results_smile{
+    width: 20%;
+    padding: 20px 0;
+}
+
+.results_smile img{
+    width: 100%;
+    margin: 20px 0;
+}
+
+.corr_percent{
+    font-weight: bold;
 }

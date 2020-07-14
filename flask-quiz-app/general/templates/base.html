@@ -10,21 +10,25 @@
         <title>{% block title %}{% endblock %} - Quiz</title>
     </head>
     <body>
-        {% include 'header.html' %}
-        {% if get_flashed_messages() %}
-            {% for category, message in get_flashed_messages(with_categories=True) %}
-                {% if category =='success' %}
-                    <div class="flash_success" onclick="closeElement(this)">
-                        <span>{{ message }}</span>
-                    </div>
-                {% else %}
-                    <div class="flash_error" onclick="closeElement(this)">
-                        <span>{{ message }}</span> 
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        {% block content %} {% endblock %}
-        {% include 'footer.html' %}
+        <div class="main_wrapper">
+            {% include 'header.html' %}
+            <div class="content_wrapper">
+                {% if get_flashed_messages() %}
+                {% for category, message in get_flashed_messages(with_categories=True) %}
+                    {% if category =='success' %}
+                        <div class="flash_success" onclick="closeElement(this)">
+                            <span>{{ message }}</span>
+                        </div>
+                    {% else %}
+                        <div class="flash_error" onclick="closeElement(this)">
+                            <span>{{ message }}</span> 
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% block content %} {% endblock %}
+            </div>
+            {% include 'footer.html' %}
+        </div>
     </body>
 </html>

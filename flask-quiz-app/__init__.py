@@ -9,6 +9,7 @@ def create_app():
         DATABASE = os.path.join(app.instance_path, 'quizappdb.sqlite')
     )
     app.config.from_pyfile('config.py', silent=True)
+    app.config["CACHE_TYPE"] = "null"
 
     try:
         os.makedirs(app.instance_path)
@@ -26,5 +27,5 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(general_bp, url_prefix='/')
     app.register_blueprint(play_bp, url_prefix='/play')
-    
+
     return app
