@@ -15,13 +15,12 @@ def play():
     else:
         return render_template('play.html')
 
-
 @play_bp.route('/question', methods=('GET', 'POST'))
 def display_question():
     if request.method == 'POST':
         answer = request.form['answer']
         if answer == session['q_set'][session['q_number']]['correct']:
-           session['c_answ'] += 1
+           session['c_number'] += 1
         session['q_number'] += 1
         return redirect(url_for('play.display_question'))
 
@@ -31,8 +30,6 @@ def display_question():
     current_question = session['q_set'][session['q_number']]
     return render_template('question.html', question=current_question, 
         q_number=session['q_number'])
-
-
 
 def get_questions_set(q_number):
     url = f'https://opentdb.com/api.php?amount={q_number}'
@@ -46,10 +43,10 @@ def get_questions_set(q_number):
         'all_answers' : all_answers, 'text': q_info['question']})
 
     session['q_set'] = data
-    session['c_answ'] = 0
+    session['c_number'] = 0
     session['q_number'] = 0
 
-def update_rating(c_number, q_number):
+def update_rating(q_number, c_number):
     db = get_db()
     old_values = db.execute('SELECT * FROM Rating WHERE id = ?', 
     (g.user['rating'], )).fetchone()
@@ -76,7 +73,7 @@ def display_results():
             return redirect(url_for('play.play'))
 
     q_number = session.pop('q_number')
-    c_number = session.pop('c_answ')
+    c_number = session.pop('c_number')
     update_rating(c_number, q_number)
     return render_template('results.html',c_number=c_number, q_number=q_number)
 

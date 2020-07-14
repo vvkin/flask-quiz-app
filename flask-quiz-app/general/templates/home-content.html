@@ -7,6 +7,9 @@
     <div class="row justify-content-center button_container">
         <form action="" method="POST">
             <button name="survey" class="survey_button" value="survey">Start Survey</button>
+            {% if session.q_number %}
+            <button name="survey" class="survey_button" value="continue">Back to game</button>
+            {% endif %}
         </form>
     </div>
     <div class="row justify-content-center info_wrapper">

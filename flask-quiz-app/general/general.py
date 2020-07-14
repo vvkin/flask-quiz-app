@@ -6,8 +6,10 @@ general_bp = Blueprint('general', __name__,
 @general_bp.route('/', methods=('GET', 'POST'))
 def home():
     if request.method == 'POST':
-        if g.user:
+        if not g.user:
+            return redirect(url_for('auth.register'))
+        elif request.form['survey'] == 'survey':
             return redirect(url_for('play.play'))
         else:
-            return redirect(url_for('auth.register'))
+            return redirect(url_for('play.display_question'))
     return render_template('home.html')
