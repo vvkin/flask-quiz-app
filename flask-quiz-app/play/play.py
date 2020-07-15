@@ -37,7 +37,9 @@ def display_question():
 
 @play_bp.route('/answer/', methods=('GET', 'POST'))
 def display_answer():
-    answer = request.form['answer']
+    answer = request.form.get('answer')
+    if answer is None:
+        return redirect(url_for('play.display_question'))
     correct =  session['q_set'][session['q_number']]['correct']
     session['q_number'] += 1
     session['c_number'] += (int(answer) == correct)
