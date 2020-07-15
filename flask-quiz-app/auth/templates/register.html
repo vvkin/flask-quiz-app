@@ -2,7 +2,6 @@
 
 {% block links %}
 <link rel="stylesheet" href="{{ url_for('auth.static', filename='css/style.css') }}" />
-<script src="{{ url_for('auth.static', filename='js/script.js') }}"></script>
 {% endblock %}
 
 {% block title %}Sign up{% endblock %}
@@ -24,21 +23,23 @@
                 required maxlength="30"/>
             </fieldset>
             <fieldset>
-                <input name="u_passwd" placeholder="Your password" type="password" 
-                required />
+                <input id="f_passwd" name="u_passwd" placeholder="Your password" 
+                type="password" required />
             </fieldset>
             <fieldset>
-                <input name="us_passwd" placeholder="Confirm password" type="password" 
-                required onended="checkPasswords()"/>
+                <input id="s_passwd" name="us_passwd" placeholder="Confirm password" 
+                type="password" required/>
             </fieldset>
             <fieldset>
-                <button name="submit" type="submit" value="Submit" 
-                id="submit_button" submit="...Sending" >Submit</button>
+                <button id="submit" name="submit" type="submit" value="Submit" 
+                id="submit_button" submit="...Sending">Submit</button>
             </fieldset>
         </form>
         <div class="redirect">
-            <a href="{{ url_for('auth.login') }}">I already have account</a>
+            <a href="{{ url_for('auth.login') }}">I already have an account</a>
         </div>
     </section>
 </div>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="{{ url_for('auth.static', filename='js/script.js') }}"></script>
 {% endblock %}

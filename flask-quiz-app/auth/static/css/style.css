@@ -91,3 +91,7 @@
     color: #222;
     text-decoration: underline;
 }
+
+.error{
+    color: red;
+}
