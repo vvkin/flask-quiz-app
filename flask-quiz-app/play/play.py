@@ -89,6 +89,6 @@ def display_results():
 
     q_number = session.pop('q_number')
     c_number = session.pop('c_number')
-    update_rating(c_number, q_number)
+    update_rating(q_number, c_number)
     return render_template('results.html',c_number=c_number, q_number=q_number)
 
