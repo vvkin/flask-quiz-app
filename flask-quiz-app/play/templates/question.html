@@ -4,12 +4,13 @@
 
 {% block links %}
 <link rel="stylesheet" href="{{ url_for('play.static', filename='css/style.css') }}" />
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 {% endblock %}
 
 {% block content %}
    <section class="question_content">
        <div class="q_form_wrapper">
-        <form action="" id="question_form" method="POST">
+        <form action="{{ url_for('play.display_question') }}" id="question_form" method="POST">
             <div class="question_text">
                  <h3>{{q_number+1}}. {{question.text|safe}}</h3>
             </div>
@@ -17,7 +18,7 @@
                  {% for variant in question.all_answers %}
                      <fieldset>
                          <button name="answer" class="answer" type="submit" 
-                         value="{{ variant }}">
+                         id="btn-{{ loop.index0 }}" value="{{ loop.index0 }}">
                              <span>{{ variant|safe }}</span>
                          </button>
                      </fieldset>
@@ -26,4 +27,5 @@
         </form>
        </div>
    </section>
+   <script src="{{ url_for('play.static', filename='js/ajax_worker.js') }}"></script>
 {% endblock %}

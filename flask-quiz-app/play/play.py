@@ -1,9 +1,10 @@
 from flask import Blueprint, g, render_template, request, redirect, flash, url_for, \
-    session, abort
+    session, jsonify, make_response
 from ..db import get_db
 from ..auth.auth import login_required
 import requests
 import functools
+import random
 
 play_bp = Blueprint('play', __name__, static_folder='static', template_folder='templates')
 
@@ -28,19 +29,19 @@ def play():
 @started_game_required
 @login_required
 def display_question():
-    if request.method == 'POST':
-        answer = request.form['answer']
-        if answer == session['q_set'][session['q_number']]['correct']:
-           session['c_number'] += 1
-        session['q_number'] += 1
-        return redirect(url_for('play.display_question'))
-
     if session['q_number'] == len(session['q_set']):
         return redirect(url_for('play.display_results'))
-    
     current_question = session['q_set'][session['q_number']]
     return render_template('question.html', question=current_question, 
         q_number=session['q_number'])
+
+@play_bp.route('/answer/', methods=('GET', 'POST'))
+def display_answer():
+    answer = request.form['answer']
+    correct =  session['q_set'][session['q_number']]['correct']
+    session['q_number'] += 1
+    session['c_number'] += (int(answer) == correct)
+    return jsonify(correct=correct, wrong=answer)
 
 def get_questions_set(q_number):
     url = f'https://opentdb.com/api.php?amount={q_number}'
@@ -50,7 +51,8 @@ def get_questions_set(q_number):
    
     for q_info in q_json['results']:
         all_answers = [q_info['correct_answer']] + q_info['incorrect_answers']
-        data.append({'correct' : q_info['correct_answer'], 
+        random.shuffle(all_answers)
+        data.append({'correct' : all_answers.index(q_info['correct_answer']),
         'all_answers' : all_answers, 'text': q_info['question']})
 
     session['q_set'] = data
