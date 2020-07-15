@@ -11,7 +11,8 @@
         <ul>
             {% if g.user %}
                 <li><a href="#"><i class="fa fa-bell-o"></i></a></li>
-                <li><a href="#"><i class="fa fa-user-circle"></i></a></li>
+                <li><a href="{{ url_for('user.user_page', username=g.user.username) }}">
+                    <i class="fa fa-user-circle"></i></a></li>
                 <li><a href="#"><i class="fa fa-bars"></i></a></li>
             {% else %}
                 <li><a href="{{ url_for('auth.login') }}">Sign in</a></li>
