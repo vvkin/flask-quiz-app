@@ -1,6 +1,8 @@
 import os
 from flask import Flask
 
+socketio = SocketIO()
+
 def create_app():
     """ App factory function """
     app = Flask(__name__, instance_relative_config=True)

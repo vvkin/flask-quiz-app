@@ -2,6 +2,7 @@ from flask import Blueprint, g, render_template, request, redirect, flash, url_f
     session, jsonify, make_response
 from ..db import get_db
 from ..auth.auth import login_required
+from .. import socketio
 import requests
 import functools
 import random
@@ -16,10 +17,21 @@ def started_game_required(view):
         return view(**kwargs)
     return wrapped_view
 
+# Clear session and add results to DB
+def clear_and_update():
+    q_number = session.pop('q_number')
+    c_number = session.pop('c_number')
+    update_rating(q_number, c_number)
+    # Return results to use in results page
+    return q_number, c_number
+
 @play_bp.route('/', methods=('GET', 'POST'))
 @login_required
 def play():
     if request.method == 'POST':
+        # Check is here started game
+        if 'q_number' in session:
+            clear_and_update()
         q_number = int(request.form['diff_button'])
         get_questions_set(q_number)
         return redirect(url_for('play.display_question'))
@@ -89,8 +101,5 @@ def display_results():
         else:
             return redirect(url_for('play.play'))
 
-    q_number = session.pop('q_number')
-    c_number = session.pop('c_number')
-    update_rating(q_number, c_number)
+    q_number, c_number = clear_and_update()
     return render_template('results.html',c_number=c_number, q_number=q_number)
-
