@@ -5,7 +5,9 @@
         </a>
     </div>
    <div class="search_bar">
-        <input type="text" name="search_users" placeholder="Search users"/>
+       <form action="{{ url_for('user.search_user') }}" id="search_form" method="POST">
+            <input type="text" id="search_users" name="username" placeholder="Search users"/>
+       </form>
     </div>
     <nav class="right_nav">
         <ul>
@@ -23,3 +25,5 @@
         </ul>
     </nav>
 </header>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="{{ url_for('general.static', filename='js/search_user.js') }}"></script>

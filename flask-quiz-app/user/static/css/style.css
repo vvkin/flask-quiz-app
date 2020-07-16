@@ -75,3 +75,9 @@
 #total{
     color: #111;
 }
+
+.no_user{
+    font-size: 3em;
+    font-weight: bold;
+    color: red;
+}

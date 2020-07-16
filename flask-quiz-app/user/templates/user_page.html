@@ -8,20 +8,26 @@
 
 {% block content %}
     <section class="user_content">
-        <div class="personal_info">
-            <span>{{ user.full_name }} | </span>
-            <span>{{ user.username }}</span>
-        </div>
-        <div class="percent">
-           <span>{{ rating.correct_percent*100 }}%</span>
-        </div>
-        <div class="stats">
-            <ul>
-                <li><span id='correct'>{{ rating.correct_answers }}</span></li>
-                <li><span id='total'>{{ rating.answers_number }}</span></li>
-                <li><span id='wrong'>{{ rating.wrong_answers }}</span></li>
-            </ul>
-        </div>
+        {% if user is none %}
+            <div class="no_user">
+                <span>User doesn't exist!</span>
+            </div>
+        {% else %}
+            <div class="personal_info">
+                <span>{{ user.full_name }} | </span>
+                <span>{{ user.username }}</span>
+            </div>
+            <div class="percent">
+            <span>{{ rating.correct_percent*100 }}%</span>
+            </div>
+            <div class="stats">
+                <ul>
+                    <li><span id='correct'>{{ rating.correct_answers }}</span></li>
+                    <li><span id='total'>{{ rating.answers_number }}</span></li>
+                    <li><span id='wrong'>{{ rating.wrong_answers }}</span></li>
+                </ul>
+            </div>
+        {% endif %}
     </section>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="{{ url_for('user.static', filename='js/jquery_color.js') }}"></script>
