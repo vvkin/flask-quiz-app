@@ -1,0 +1,77 @@
+@media(max-width: 700px){
+    .user_content{
+        width: 80%;
+    }
+}
+
+.user_content{
+    flex: 1;
+    text-align: center;
+    display: flex;
+    min-width: 60%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+}
+
+.percent{
+    margin: 50px 0;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    border-radius: 50%;
+    border: 1px solid black;
+    box-shadow: 0 0 10px black;
+}
+
+.percent span{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 500;
+    font-size: 2em;
+}
+
+.personal_info span{
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+}
+
+.stats{
+    font-size: 1.3em;
+}
+
+.stats ul li{
+    float: left;
+    padding: 10px 15px;
+}
+
+.nice{
+    background-color: rgb(7, 145, 7);
+}
+
+.normal{
+    background-color: rgb(218, 218, 28);
+}
+
+.bad{
+    background-color: rgb(185, 21, 21);
+}
+
+.stats ul li span{
+    font-weight: 600;
+}
+
+#correct{
+    color: green;
+}
+
+#wrong{
+    color: red;
+}
+
+#total{
+    color: #111;
+}
