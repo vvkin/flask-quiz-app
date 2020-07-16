@@ -1,8 +1,7 @@
 from flask import Blueprint, g, render_template, request, redirect, flash, url_for, \
-    session, jsonify, make_response
+    session, jsonify
 from ..db import get_db
 from ..auth.auth import login_required
-from .. import socketio
 import requests
 import functools
 import random

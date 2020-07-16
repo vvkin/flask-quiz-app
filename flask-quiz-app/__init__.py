@@ -1,8 +1,6 @@
 import os
 from flask import Flask
 
-socketio = SocketIO()
-
 def create_app():
     """ App factory function """
     app = Flask(__name__, instance_relative_config=True)
@@ -11,7 +9,6 @@ def create_app():
         DATABASE = os.path.join(app.instance_path, 'quizappdb.sqlite')
     )
     app.config.from_pyfile('config.py', silent=True)
-    app.config["CACHE_TYPE"] = "null"
 
     try:
         os.makedirs(app.instance_path)
