@@ -75,6 +75,7 @@ def login():
 @auth_bp.route('/logout/')
 def logout():
     session.clear()
+    flash('You have been successfully logged out', category='success')
     return redirect(url_for('general.home'))
 
 @auth_bp.before_app_request
